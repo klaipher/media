@@ -28,11 +28,6 @@ rootProject.allprojects.forEach {
 android {
     namespace 'androidx.media3.common'
 
-    buildTypes {
-        debug {
-            testCoverageEnabled = true
-        }
-    }
     publishing {
         singleVariant('release') {
             withSourcesJar()
@@ -81,10 +76,10 @@ dependencies {
     testImplementation 'com.google.truth:truth:' + truthVersion
     testImplementation 'org.robolectric:robolectric:' + robolectricVersion
     testImplementation project(modulePrefix + 'lib-exoplayer')
-    testImplementation project(modulePrefix + 'test-utils')
+    if (mediaTestsIncluded) testImplementation project(modulePrefix + 'test-utils')
 
     androidTestImplementation 'androidx.test:runner:' + androidxTestRunnerVersion
-    androidTestImplementation project(modulePrefix + 'test-utils')
+    if (mediaTestsIncluded) androidTestImplementation project(modulePrefix + 'test-utils')
 }
 
 ext {

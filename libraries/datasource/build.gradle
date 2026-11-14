@@ -17,11 +17,6 @@ apply from: "$gradle.ext.androidxMediaSettingsDir/common_config.gradle"
 android {
     namespace 'androidx.media3.datasource'
 
-    buildTypes {
-        debug {
-            testCoverageEnabled = true
-        }
-    }
 
     sourceSets {
         androidTest.assets.srcDir '../test_data/src/test/assets'
@@ -48,7 +43,7 @@ dependencies {
     androidTestImplementation 'com.linkedin.dexmaker:dexmaker:' + dexmakerVersion
     androidTestImplementation 'com.linkedin.dexmaker:dexmaker-mockito:' + dexmakerVersion
     androidTestImplementation 'com.squareup.okhttp3:mockwebserver:' + okhttpVersion
-    androidTestImplementation(project(modulePrefix + 'test-utils')) {
+    if (mediaTestsIncluded) androidTestImplementation(project(modulePrefix + 'test-utils')) {
         exclude module: modulePrefix.substring(1) + 'library-core'
     }
     testImplementation 'org.mockito:mockito-core:' + mockitoVersion
@@ -57,7 +52,7 @@ dependencies {
     testImplementation 'com.google.truth:truth:' + truthVersion
     testImplementation 'com.squareup.okhttp3:mockwebserver:' + okhttpVersion
     testImplementation 'org.robolectric:robolectric:' + robolectricVersion
-    testImplementation project(modulePrefix + 'test-utils')
+    if (mediaTestsIncluded) testImplementation project(modulePrefix + 'test-utils')
 }
 
 ext {

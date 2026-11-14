@@ -17,11 +17,6 @@ apply from: "$gradle.ext.androidxMediaSettingsDir/common_config.gradle"
 android {
     namespace 'androidx.media3.exoplayer.dash'
 
-    buildTypes {
-        debug {
-            testCoverageEnabled = true
-        }
-    }
 
     sourceSets.test.assets.srcDir '../test_data/src/test/assets/'
 
@@ -38,9 +33,9 @@ dependencies {
     compileOnly 'org.checkerframework:checker-qual:' + checkerframeworkVersion
     compileOnly 'org.jetbrains.kotlin:kotlin-annotations-jvm:' + kotlinAnnotationsVersion
     implementation 'androidx.annotation:annotation:' + androidxAnnotationVersion
-    testImplementation project(modulePrefix + 'lib-inspector')
-    testImplementation project(modulePrefix + 'test-utils-robolectric')
-    testImplementation project(modulePrefix + 'test-utils')
+    if (mediaTestsIncluded) testImplementation project(modulePrefix + 'lib-inspector')
+    if (mediaTestsIncluded) testImplementation project(modulePrefix + 'test-utils-robolectric')
+    if (mediaTestsIncluded) testImplementation project(modulePrefix + 'test-utils')
     testImplementation 'com.google.testparameterinjector:test-parameter-injector:' + testParameterInjectorVersion
     testImplementation 'org.robolectric:robolectric:' + robolectricVersion
 }

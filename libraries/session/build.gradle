@@ -17,11 +17,6 @@ apply from: "$gradle.ext.androidxMediaSettingsDir/common_config.gradle"
 android {
     namespace 'androidx.media3.session'
 
-    buildTypes {
-        debug {
-            testCoverageEnabled = true
-        }
-    }
     sourceSets.test.assets.srcDir '../test_data/src/test/assets/'
     publishing {
         singleVariant('release') {
@@ -43,9 +38,9 @@ dependencies {
     implementation 'androidx.media:media:' + androidxMediaVersion
     implementation 'androidx.core:core:' + androidxCoreVersion
     testImplementation 'com.squareup.okhttp3:mockwebserver:' + okhttpVersion
-    testImplementation project(modulePrefix + 'test-data')
-    testImplementation project(modulePrefix + 'test-utils')
-    testImplementation project(modulePrefix + 'test-utils-robolectric')
+    if (mediaTestsIncluded) testImplementation project(modulePrefix + 'test-data')
+    if (mediaTestsIncluded) testImplementation project(modulePrefix + 'test-utils')
+    if (mediaTestsIncluded) testImplementation project(modulePrefix + 'test-utils-robolectric')
     testImplementation project(modulePrefix + 'lib-exoplayer')
     testImplementation 'org.robolectric:robolectric:' + robolectricVersion
     testImplementation 'com.google.testparameterinjector:test-parameter-injector:' + testParameterInjectorVersion
